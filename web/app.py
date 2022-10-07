@@ -58,6 +58,7 @@ class Register(Resource):
         # Give response
         retJson = {"status": 200, "message": "You have successfully signed up for NLP API"}
 
+
 class Detect(Resource):
     def post(self):
         postedData = request.get_json()
@@ -100,7 +101,7 @@ class Detect(Resource):
         # Update user's number of tokens
         users.update_one({
             "Username": username
-        }, {"$set": {"Tokens": current_tokens-1}})
+        }, {"$set": {"Tokens": current_tokens - 1}})
 
         # send response
         retJson = {
@@ -140,7 +141,7 @@ class Refill(Resource):
             "Username": username
         }, {"$set": {"Tokens": refill_amount}})
 
-        retJson = {"status": 200, "message": "token refill successful", "username": username, "Tokens": current_tokens}
+        retJson = {"status": 200, "message": "token refill successful", "username": username, "Tokens": refill_amount}
         return jsonify(retJson)
 
 
@@ -148,5 +149,5 @@ api.add_resource(Register, "/register")
 api.add_resource(Refill, "/refill")
 api.add_resource(Detect, "/detect")
 
-if __name__ =='__main__':
+if __name__ == '__main__':
     app.run(host='0.0.0.0')
